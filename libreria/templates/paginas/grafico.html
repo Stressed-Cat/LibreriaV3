@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block titulo %}  Pie-Chart  {% endblock %}
+
+{% block contenido %} 
+
+<div id="container" style="width: 75%;">
+    <canvas id="pie-chart"></canvas>
+</div>
+<div>
+     <p>Para extraer la lista de articulos, presione acá</p>
+     <input type="button" value="Exportar CSV" onclick="window.open('exportar')">
+</div>
+{% comment %} acá se crea lo que viene siendo la pie-chart, el cual irá arriba en el div {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    var config = {
+    type: 'pie',
+    data: {
+        datasets: [{
+        data: {{ data|safe }},
+        backgroundColor: ['#c924a8', '#24c937', '#2424c9', '#c73030'],
+        label: 'Stocks'
+        }],
+        labels: {{ labels|safe }}
+    },
+    options: {
+        responsive: true
+    }
+    };
+
+    window.onload = function() {
+    var ctx = document.getElementById('pie-chart').getContext('2d');
+    window.myPie = new Chart(ctx, config);
+    };
+</script>
+
+{% endblock %}

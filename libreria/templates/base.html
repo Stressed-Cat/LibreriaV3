@@ -1,0 +1,478 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+   <head> 
+   <title>{% block titulo %}  {% endblock %} </title>
+   <link rel="icon" href="/imagenes/plusultranuevo.png">
+   
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+         <!-- mobile metas -->
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+   <link rel="stylesheet" href="/CSS/main.css">
+         <!-- bootstrap css -->
+   <link rel="stylesheet" href="/CSS/bootstrap.min.css">
+         <!-- style css -->
+   <link rel="stylesheet" href="/CSS/style1.css" >
+         <!-- Responsive-->
+   <link rel="stylesheet" href="/CSS/responsive.css">
+   <link rel="stylesheet" href="/CSS/navbar.css">
+         <!-- Scrollbar Custom CSS -->
+   <link rel="stylesheet" href="/CSS/jquery.mCustomScrollbar.min.css">
+         <!-- Tweaks for older IEs-->
+   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+   <script type="text/javascript">
+      var user = '{{request.user}}'
+      function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+         const cookies = document.cookie.split(';');
+         for (let i = 0; i < cookies.length; i++) {
+               const cookie = cookies[i].trim();
+               // Does this cookie string begin with the name we want?
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+               }
+     }
+      }
+      return cookieValue;
+   }
+   var csrftoken = getCookie('csrftoken');
+   </script>
+   
+   </head>
+
+   <body class="main-layout" style="background-color:#FF8000">
+
+      <header>
+         <!-- header inner -->
+         <div class="header">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                     <div class="full">
+                        <div class="center-desk">
+                           <div class="logo">
+                              <a href="inicio.html"><img src="imagenes/plusultranuevo.png" width="70" alt="#" /></a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                     <nav class="navigation navbar navbar-expand-md navbar-dark ">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarsExample04">
+                           <ul class="navbar-nav mr-auto">
+                              <li class="nav-item active">
+                                 <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{% url 'libros' %}">Libros</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{% url 'mangas' %}">Mangas</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{% url 'comics' %}">Comics</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{% url 'Descargar' %}">Lista Libros</a>
+                              </li>
+                              <li class="nav-item">
+                                 {% if user.is_authenticated %}
+                                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                 {% else %}
+                                 <a class="nav-link" href="{% url 'registro' %}">Registrarse</a>
+                                 {% endif %}
+                              </li>
+                              <li class="nav-item">
+                                 {% if user.is_authenticated %}
+                                 {% else %}
+                                 <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                 {% endif %}
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link"> Hola, {{request.user}}</a>
+                              </li>
+                              
+                              <li class="nav-item d_none">
+                                 <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                              </li>
+                              
+                           </ul>
+                           <div class="form-inline my-2 my-lg-0">        
+                              <a href="{% url 'cart' %}">
+                                <img  id="cart-icon" src="imagenes/carrito.png">
+                             </a>
+                             <p id="cart-total">{{cartItems}}</p>
+                   
+                          </div>
+                        </div>
+                        </div>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+   </header>
+   {% if request.path == '/' %}
+   <section class="banner_main">
+         <div id="banner1" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+               <div class="carousel-item active">
+                  <div class="container">
+                     <div class="carousel-caption">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="text-bg">
+                                 <span>Libreria Plus Ultra</span>
+                                 <h2>Libros, mangas, comics
+                                 </h1>
+                                 <p> Aqui puedes comprar todo tipo de libros, mangas y comics a un precio razonable </p>
+                                 <a href="#" style="background: orange">Buy Now </a> <a  href="contact.html" style="background: orange" >Contact </a>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="text_img">
+                                 <figure><img src="imagenes/brandon.jpg" height="50" alt="#"/></figure>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+      </section>
+      
+      <div class="three_box" style="background-color:#FF8000">
+         <div class="container" >
+            <div class="row">
+               <div class="col-md-4">
+                  <div class="box_text">
+                     <i><img src="imagenes/thr.jpg"  width="300" alt="#"/></i>
+                     <h3>Libros</h3>
+                     <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="box_text">
+                     <i><img src="imagenes/thr1.jpeg" width="302" alt="#"/></i>
+                     <h3>Mangas</h3>
+                     <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="box_text">
+                     <i><img src="imagenes/thr2.jpg"  width="291" alt="#"/></i>
+                     <h3>Comics</h3>
+                     <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- three_box -->
+      <!-- products -->
+      <div  class="products">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Mas vendidos</h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="our_products">
+                     <div class="row">
+                        <div class="col-md-4 margin_bottom1">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product1.png" alt="#"/></figure>
+                              <h3 style="background: orange" >Computer</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-4 margin_bottom1">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product2.png" alt="#"/></figure>
+                              <h3 style="background: orange" >Laptop</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-4 margin_bottom1">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product3.png" alt="#"/></figure>
+                              <h3 style="background: orange" >Tablet</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-4 margin_bottom1">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product4.png" alt="#"/></figure>
+                              <h3 style="background: orange" >Speakers</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-4 margin_bottom1">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product5.png" alt="#"/></figure>
+                              <h3 style="background: orange">internet</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-4 margin_bottom1">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product6.png" alt="#"/></figure>
+                              <h3 style="background: orange" >Hardisk</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product7.png" alt="#"/></figure>
+                              <h3 style="background: orange" >Rams</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product8.png" alt="#"/></figure>
+                              <h3 style="background: orange" >Bettery</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="product_box">
+                              <figure><img src="imagenes/product9.png" alt="#"/></figure>
+                              <h3 style="background: orange" >Drive</h3>
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                           <a class="read_more" href="#">See More</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end products -->
+      <!-- laptop  section -->
+      <div class="laptop">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <div class="titlepage">
+                     <p>Cualquier manga</p>
+                     <h2>Con 20% de descuento</h2>
+                     <a class="read_more" href="#">Shop Now</a>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="laptop_box">
+                     <figure><img src="imagenes/nagatoro.jpeg" width="350" alt="#"/></figure>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
+      <!-- end laptop  section -->
+      <!-- customer -->
+      <div class="customer">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Customer Review</h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-12">
+                  <div id="myCarousel" class="carousel slide customer_Carousel " data-ride="carousel">
+                     <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                     </ol>
+                     <div class="carousel-inner">
+                        <div class="carousel-item active">
+                           <div class="container">
+                              <div class="carousel-caption ">
+                                 <div class="row">
+                                    <div class="col-md-9 offset-md-3">
+                                       <div class="test_box">
+                                          <i><img src="imagenes/cos.png" alt="#"/></i>
+                                          <h4>Sandy Miller</h4>
+                                          <p>ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="carousel-item">
+                           <div class="container">
+                              <div class="carousel-caption">
+                                 <div class="row">
+                                    <div class="col-md-9 offset-md-3">
+                                       <div class="test_box">
+                                          <i><img src="imagenes/cos.png" alt="#"/></i>
+                                          <h4>Sandy Miller</h4>
+                                          <p>ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="carousel-item">
+                           <div class="container">
+                              <div class="carousel-caption">
+                                 <div class="row">
+                                    <div class="col-md-9 offset-md-3">
+                                       <div class="test_box">
+                                          <i><img src="imagenes/cos.png" alt="#"/></i>
+                                          <h4>Sandy Miller</h4>
+                                          <p>ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id</p>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                     <span class="sr-only">Previous</span>
+                     </a>
+                     <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                     <span class="sr-only">Next</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end customer -->
+
+     
+      <!--  footer -->
+
+      {% endif %}
+      <!-- end footer -->
+      <!-- Javascript files-->
+     
+      {% if request.path != '/' %}
+      <section class="banner_main">
+         <div background-color = class="container">
+            <div background-color = class="container">
+               <div class="row">
+                  <div class="col-12">
+                     <br/>
+                        {% block contenido %}  {% endblock %}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      {% endif %}
+       <!--  contact -->
+       <div class="contact">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Contact Now</h2>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-md-10 offset-md-1">
+                  <form id="request" class="main_form">
+                     <div class="row">
+                        <div class="col-md-12 ">
+                           <input class="contactus" placeholder="Name" type="type" name="Name"> 
+                        </div>
+                        <div class="col-md-12">
+                           <input class="contactus" placeholder="Email" type="type" name="Email"> 
+                        </div>
+                        <div class="col-md-12">
+                           <input class="contactus" placeholder="Phone Number" type="type" name="Phone Number">                          
+                        </div>
+                        <div class="col-md-12">
+                           <textarea class="textarea" placeholder="Message" type="type" Message="Name">Message </textarea>
+                        </div>
+                        <div class="col-md-12">
+                           <button class="send_btn">Send</button>
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end contact -->
+      <footer>
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                     <img class="logo1" src="imagenes/plusultra.png"  width="90" alt="#"/>
+                     <ul class="social_icon">
+                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+                        <li><a href="https://instagram.com/plusultralibreria?igshid=YmMyMTA2M2Y="><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                     </ul>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                     <h3>About Us</h3>
+                     <ul class="about_us">
+                        <li>dolor sit amet, consectetur<br> magna aliqua. Ut enim ad <br>minim veniam, <br> quisdotempor incididunt r</li>
+                     </ul>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                     <h3>Contact Us</h3>
+                     <ul class="conta">
+                        <li>dolor sit amet,<br> consectetur <br>magna aliqua.<br> quisdotempor <br>incididunt ut e </li>
+                     </ul>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                     <form class="bottom_form">
+                        <h3>Newsletter</h3>
+                        <input class="enter" placeholder="Enter your email" type="text" name="Enter your email">
+                        <button class="sub_btn">subscribe</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+            <div class="copyright">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <p>© 2019 All Rights Reserved. Design by<a href="https://html.design/"> Free Html Templates</a></p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      
+
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <!-- sidebar -->
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+  
+      
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+      <script type=" text/javascript" src="js/carrito.js"></script>
+  
+   </body>
+   <!-- Bootstrap JavaScript Libraries -->
+     
+</html>
+

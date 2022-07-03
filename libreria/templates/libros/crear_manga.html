@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block titulo %}  Agregar nuevo manga  {% endblock %}
+
+{% block contenido %} 
+
+<div class="card">
+    <div class="card-header">
+        Crear un Manga
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del Manga</h4>
+        {% include 'libros/form.html' %}
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+</div>
+
+{% endblock %}

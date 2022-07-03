@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block titulo %} Libros  {% endblock %}
+
+{% block contenido %} 
+<section class="banner_main">
+    <div class="row">
+        {% for libro in libros %}
+        <div class="col-lg.4">
+            <img src="{{libro.imagen.url}}" width="230">
+            <div class="box-element product">
+                    <h6><strong> {{ libro.nombre }} </strong></h6>
+                    <hr>
+                    <button data-product="{{libro.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                    <h4 style="display: inline-block"><strong>${{libro.precio}} </strong></h4>
+            </div> 
+        </div>
+        {% endfor %}
+    </div>
+    
+</section>
+<div class="card">
+    <div class="card-header">
+
+        {% for group in user.groups.all %}
+            {% if user.is_authenticated %}
+                {% if group.name == 'Vendedor' %}
+                <a name="" id="" class="btn btn-primary" href="{% url 'crear_libro' %}" role="button" href="#">agregar nuevo libro</a>
+               {% endif %}
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Libros</h4>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Editorial</th>
+                    <th>Imagen</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    {% for group in user.groups.all %}
+                        {% if user.is_authenticated %}
+                            {% if group.name == 'Vendedor' %}
+                                <th>Acciones</th>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for libro in libros %}
+                <tr>
+                    <td> 
+                        <img src="{{libro.imagen.url}}" width="100">
+                    </td>
+                    <td> {{ libro.editorial }} </td>
+                    <td> {{ libro.nombre }} </td>
+                    
+                    <td> {{ libro.stock }} </td>
+                    <td> {{ libro.precio }} </td>
+                    {% for group in user.groups.all %}
+                        {% if user.is_authenticated %}
+                            {% if group.name == 'Comprador' %}
+                            <td> <a name="" id="" class="btn btn-info" href="{% url 'agregar' libro.id %}" role="button">Añadir al carrito </a> </td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                   
+                    {% for group in user.groups.all %}
+                        {% if user.is_authenticated %}
+                            {% if group.name == 'Vendedor' %}
+                                <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' libro.id %}" role="button">Editar </a>
+                                    |
+                                    <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' libro.id %}" role="button">Borrar </a>
+                                </td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                   
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% for group in user.groups.all %}
+            {% if user.is_authenticated %}
+                    {% if group.name == 'Comprador' %}
+                        {% include "paginas/carrito.html" %}
+                    {% endif %}
+            {% endif %}
+        {% endfor %}
+        
+        
+    </div>
+    <div class="card-footer text-muted">
+
+    </div>
+</div>
+
+{% endblock %}

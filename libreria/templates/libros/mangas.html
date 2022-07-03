@@ -1,0 +1,81 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}  Mangas  {% endblock %}
+
+{% block contenido %} 
+
+<div class="card">
+    <div class="card-header">
+        {% for group in user.groups.all %}
+            {% if user.is_authenticated %}
+                {% if group.name == 'Vendedor' %}
+                <a name="" id="" class="btn btn-primary" href="{% url 'crear_manga' %}" role="button" href="#">agregar nuevo libro</a>
+               {% endif %}
+            {% endif %}
+        {% endfor %}
+
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Mangas</h4>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Editorial</th>
+                    <th>Titulo</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    {% for group in user.groups.all %}
+                        {% if user.is_authenticated %}
+                            {% if group.name == 'Vendedor' %}
+                                <th>Acciones</th>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                </tr>
+            </thead>
+            <tbody class="Manga">
+                {% for manga in mangas %}
+                    <tr>
+                        <td> 
+                            <img src="{{manga.imagen.url}}" width="100">
+                        </td>
+                        <td> {{ manga.editorial }} </td>
+                        <td> {{ manga.nombre }} </td>
+                    
+                        
+                        <td> {{ manga.stock }} </td>
+                        <td> {{ manga.precio }} </td>
+                        <td> <a name="" id="" class="btn btn-info" href="{% url 'agregar' manga.id %}" role="button">Añadir al carrito </a> </td>
+                        {% for group in user.groups.all %}
+                            {% if user.is_authenticated %}
+                                {% if group.name == 'Vendedor' %}
+                                    <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' manga.id %}" role="button">Editar </a>
+                                        |
+                                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' manga.id %}" role="button">Borrar </a>
+                                    </td>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% for group in user.groups.all %}
+            {% if user.is_authenticated %}
+                    {% if group.name == 'Comprador' %}
+                        {% include "paginas/carrito.html" %}
+                    {% endif %}
+            {% endif %}
+        {% endfor %}
+        
+        
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+</div>
+
+{% endblock %}
