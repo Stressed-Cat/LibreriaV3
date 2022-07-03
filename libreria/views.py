@@ -213,7 +213,9 @@ def processOrder(request):
                         )
                 # Se descuenta el stock de con la cantidad del producto comprado al realizar la paga, este stock será un int normal por ahora, pero funciona
                 for see_cart in query_cart:
-                        Articulo.objects.filter(nombre = see_cart.producto).update(stock = 10)
+                        Filtrando = Articulo.objects.get(nombre = see_cart.producto)
+                        Filtrando.stock = Filtrando.stock - see_cart.cantidad
+                        Filtrando.save()
         else:
                 print('user is not login')
         return JsonResponse('Payment complete', safe=False)
