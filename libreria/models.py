@@ -119,13 +119,14 @@ class OrdenItem(models.Model):
         return total
 
 class DireccionEntrega(models.Model):
-	usuario = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True)
-	orden = models.ForeignKey(Orden, on_delete=models.SET_NULL, null=True)
-	direccion = models.CharField(max_length=200, null=False)
-	ciudad = models.CharField(max_length=200, null=False)
-	region = models.CharField(max_length=200, null=False)
-	codigo_postal = models.CharField(max_length=200, null=False)
-	fecha_anadido = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True)
+    orden = models.ForeignKey(Orden, on_delete=models.SET_NULL, null=True)
+    direccion = models.CharField(max_length=200, null=False)
+    ciudad = models.CharField(max_length=200, null=False)
+    region = models.CharField(max_length=200, null=False)
+    codigo_postal = models.CharField(max_length=200, null=False)
+    fecha_anadido = models.DateTimeField(auto_now_add=True)
+    fecha_entrega = models.DateTimeField(null=True)
 
-	def __str__(self):
-		return self.direccion
+    def __str__(self):
+	    return self.direccion

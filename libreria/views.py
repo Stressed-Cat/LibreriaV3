@@ -19,6 +19,9 @@ from reportlab.pdfgen import canvas
 from django.http import JsonResponse
 import json
 import datetime
+from django.db.models import Sum
+from django.db.models.functions import Extract
+from datetime import datetime
 # Create your views here.
 def Registro(request):
         if request.user.is_authenticated:
@@ -210,6 +213,7 @@ def processOrder(request):
                                 ciudad = data['shipping']['city'],
                                 region = data['shipping']['state'],
                                 codigo_postal = data['shipping']['zipcode'],
+                                fecha_entrega = data['shipping']['delidate'],
                         )
                 # Se descuenta el stock de con la cantidad del producto comprado al realizar la paga, este stock será un int normal por ahora, pero funciona
                 for see_cart in query_cart:
@@ -249,15 +253,45 @@ def horario(request):
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename='Horario_e_informacion.pdf')
 
-def grafico(request):
+def graficos(request): 
+        return render(request, 'paginas/graficos.html')
+
+def grafico_stock(request):
     labels = []
     data = []
-    queryset = Articulo.objects.order_by('tipo')[:5]
+    queryset = Articulo.objects.all()
     for article in queryset:
         labels.append(article.nombre)
         data.append(article.stock)
-    return render(request, 'paginas/grafico.html', {'labels': labels, 'data': data,})
-@register.filter(name='has_group') 
+    return render(request, 'paginas/grafico_stock.html', {'labels': labels, 'data': data,})
+
+@register.filter(name='has_group')
+
+# Al crear el grafico tristemente no me deja meter la fecha, intenté sacar solo el mes pero igual no me funciona porque me da <QuerySet [7]>
+def grafico_sales(request):
+    labels = []
+    data = []
+    queryset = OrdenItem.objects.all()
+    for article in queryset:
+        print(article.fecha_anadido)
+        print(article.cantidad)
+        labels.append("Test")
+        data.append(article.cantidad)
+    return render(request, 'paginas/grafico_sales.html', {'labels': labels, 'data': data,})
+
+def grafico_pais(request):
+    labels = []
+    data = []
+    queryset = Ciudad.objects.all()
+    for query_city in queryset:
+        print(query_city.nombre)
+        print(Usuario.objects.filter(ciudad=query_city).count())
+        labels.append(query_city.nombre)
+        data.append(Usuario.objects.filter(ciudad=query_city).count())
+    return render(request, 'paginas/grafico_pais.html', {'labels': labels, 'data': data,})
+
+    
+
 def has_group(user, group_name):
     group =  Group.objects.get(name=group_name) 
     return group in user.groups.all() 

@@ -32,7 +32,7 @@
                         <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
                     </div>
                     <div class="form-field">
-                        <input class="form-control" type="text" name="country" placeholder="Zip code..">
+                        <input class="form-control" type="date" name="FechaEntrega">
                     </div>
                 </div>
 
@@ -106,12 +106,14 @@
             'city' : null,
             'state' : null,
             'zipcode' : null,
+            'delidate' : null,
         }
         if(shipping == 'True'){
             shippingInfo.address = form.address.value
             shippingInfo.city = form.city.value
             shippingInfo.state = form.state.value
             shippingInfo.zipcode = form.zipcode.value
+            shippingInfo.delidate = form.FechaEntrega.value
         }
         if(user == 'AnonymousUser'){
             userFormData.name = form.name.value
